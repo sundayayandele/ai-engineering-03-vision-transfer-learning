@@ -1,0 +1,8 @@
+flowchart LR
+ Source[Licensed images] --> Validate[Validate and label]
+ Validate --> Split[Train / validation / test]
+ Split --> Train[Transfer learning]
+ Train --> Evaluate[Evaluation]
+ Evaluate --> Approve[Model approval]
+ Approve --> Serve[Inference]
+ Serve --> Monitor[Monitoring]
