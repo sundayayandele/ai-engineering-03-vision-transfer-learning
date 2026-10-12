@@ -1,0 +1,7 @@
+flowchart TB
+ User[Client] --> Ingress[Ingress]
+ Ingress --> Service[Service]
+ Service --> Pod1[Inference pod A]
+ Service --> Pod2[Inference pod B]
+ Artifact[Model artifact store] --> Pod1
+ Artifact --> Pod2
