@@ -2,6 +2,8 @@ name: education-smoke
 on:
   workflow_dispatch:
   pull_request:
+  push:
+    branches: [main]
 permissions:
   contents: read
 jobs:
@@ -21,6 +23,32 @@ jobs:
         run: python scripts/train_smoke.py
       - name: Unit tests
         run: pytest -q
+      - name: Verify live API readiness and multipart image inference
+        run: |
+          python - <<'PY'
+          import io
+          from fastapi.testclient import TestClient
+          from PIL import Image
+          from app.main import app
+
+          image = Image.new("RGB", (64, 64), color=(12, 120, 200))
+          buf = io.BytesIO()
+          image.save(buf, format="PNG")
+          with TestClient(app) as client:
+              live = client.get("/health/live")
+              ready = client.get("/health/ready")
+              prediction = client.post(
+                  "/predict",
+                  files={"file": ("sample.png", buf.getvalue(), "image/png")},
+              )
+              assert live.status_code == 200, live.text
+              assert ready.status_code == 200, ready.text
+              assert prediction.status_code == 200, prediction.text
+              body = prediction.json()
+              assert len(body["probabilities"]) == 2, body
+              assert abs(sum(body["probabilities"]) - 1.0) < 1e-5, body
+              print("PASS: liveness, readiness, multipart prediction, probability sum")
+          PY
       - name: Artifact information
         run: |
           ls -lh artifacts/
