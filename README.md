@@ -35,6 +35,14 @@ uvicorn app.main:app --reload
 - `GET /health/ready` — model readiness
 - `POST /predict` — upload an image file and receive top class probabilities
 
+
+## Architectural Diagrams & Infographics
+![Architectural Diagrams & Infographics](/diagrams/a_clean_infographic_diagram_on_a_white_background.png)
+
+![Architectural Diagrams & Infographics](/diagrams/a_large_infographic_diagram_with_a_clean_modern_fl.png)
+
+![Architectural Diagrams & Infographics](/diagramsa_wide_colorful_infographic_diagram_with_clean_ve.png)
+
 ## Documentation
 
 - [Learning lab](docs/learning/GITHUB-RUNNERS-LAB.md)
