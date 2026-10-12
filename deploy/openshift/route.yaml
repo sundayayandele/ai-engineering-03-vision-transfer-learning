@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: vision-inference
+spec:
+  to:
+    kind: Service
+    name: vision-inference
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+# Requires a secured ingress/auth layer before public production exposure.
