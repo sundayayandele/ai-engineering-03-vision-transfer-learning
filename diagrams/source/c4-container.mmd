@@ -1,0 +1,7 @@
+flowchart TB
+ Client[API client] --> API[FastAPI inference]
+ Images[Licensed images] --> Trainer[PyTorch training job]
+ Trainer --> Evaluation[Evaluation and model card]
+ Evaluation --> Registry[Model artifact store]
+ Registry --> API
+ API --> Metrics[Observability]
