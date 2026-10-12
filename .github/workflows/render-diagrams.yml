@@ -23,7 +23,8 @@ jobs:
         run: npm install --no-save @mermaid-js/mermaid-cli@11.4.2
       - name: Configure headless Chromium for hosted CI
         run: |
-          printf '{"args":["--no-sandbox","--disable-setuid-sandbox"]}\n' > /tmp/puppeteer-config.json\n      - name: Render every editable Mermaid source to SVG and PNG
+          printf '{"args":["--no-sandbox","--disable-setuid-sandbox"]}\n' > /tmp/puppeteer-config.json
+      - name: Render every editable Mermaid source to SVG and PNG
         run: |
           set -euo pipefail
           for source in diagrams/source/*.mmd; do
