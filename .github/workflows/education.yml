@@ -1,0 +1,27 @@
+name: education-smoke
+on:
+  workflow_dispatch:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  cpu-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install CPU PyTorch and project
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch torchvision
+          python -m pip install -e ".[dev]"
+      - name: Train synthetic smoke model
+        run: python scripts/train_smoke.py
+      - name: Unit tests
+        run: pytest -q
+      - name: Artifact information
+        run: |
+          ls -lh artifacts/
+          df -h .
