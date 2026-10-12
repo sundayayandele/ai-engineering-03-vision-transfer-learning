@@ -1,0 +1,50 @@
+name: render-diagrams
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "diagrams/source/*.mmd"
+      - ".github/workflows/render-diagrams.yml"
+permissions:
+  contents: write
+concurrency:
+  group: render-diagrams-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  render:
+    if: github.repository == 'sundayayandele/ai-engineering-03-vision-transfer-learning'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install Mermaid CLI
+        run: npm install --no-save @mermaid-js/mermaid-cli@11.4.2
+      - name: Render every editable Mermaid source to SVG and PNG
+        run: |
+          set -euo pipefail
+          for source in diagrams/source/*.mmd; do
+            base="${source%.mmd}"
+            npx mmdc -i "$source" -o "${base}.svg" -b white
+            npx mmdc -i "$source" -o "${base}.png" -b white -s 2
+          done
+          test "$(find diagrams/source -name '*.svg' | wc -l)" -eq "$(find diagrams/source -name '*.mmd' | wc -l)"
+          test "$(find diagrams/source -name '*.png' | wc -l)" -eq "$(find diagrams/source -name '*.mmd' | wc -l)"
+      - name: Commit generated diagrams
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagrams/source/*.svg diagrams/source/*.png
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: render architecture diagrams as SVG and PNG"
+            git push
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project03-architecture-diagrams
+          path: |
+            diagrams/source/*.mmd
+            diagrams/source/*.svg
+            diagrams/source/*.png
+          retention-days: 14
