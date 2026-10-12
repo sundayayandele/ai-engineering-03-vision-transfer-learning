@@ -4,9 +4,9 @@ from __future__ import annotations
 import io
 import os
 from pathlib import Path
+from typing import Annotated
 
 import torch
-from typing import Annotated
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image, UnidentifiedImageError
