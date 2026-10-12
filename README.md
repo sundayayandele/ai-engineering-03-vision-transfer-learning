@@ -20,7 +20,7 @@ Reference designs cover TOGAF 10, ArchiMate-inspired viewpoints, C4, model lifec
 
 ## Step-by-step learner labs: local or GitHub-hosted
 
-Choose **either** a local Docker Desktop/Rancher Desktop environment or GitHub's standard hosted runners. Both use **synthetic images and random-initialized ResNet18 weights** for functional testing, not real model accuracy.
+Choose **either** a local Docker Desktop/Rancher Desktop/Podman Desktop environment or GitHub's standard hosted runners. Both use **synthetic images and random-initialized ResNet18 weights** for functional testing, not real model accuracy.
 
 ### Option A — Local Python + Docker Desktop or Rancher Desktop + Postman
 
@@ -52,7 +52,19 @@ Choose **either** a local Docker Desktop/Rancher Desktop environment or GitHub's
 
 **Full illustrated command-by-command guide:** [Docker Desktop / Rancher Desktop / Postman local lab](docs/learning/LOCAL-DOCKER-POSTMAN-LAB.md).
 
-### Option B — GitHub-hosted runner (no local Docker needed)
+### Option B — Podman Desktop (local alternative)
+
+1. Install **Podman Desktop** and start its Podman engine (or Podman machine on Windows/macOS).
+2. Fork/clone the repository and create a `learner/podman-lab` branch.
+3. Generate the synthetic model with `python scripts/train_smoke.py` after installing the project dependencies.
+4. Build the image using `podman build -t project03-vision-inference:local .`.
+5. Start it using `podman run` with a read-only mount of `artifacts/` and localhost port 8000.
+6. Test the health endpoints and upload an image using Postman.
+7. Inspect `podman logs` and `podman stats`, then remove the container.
+
+**Full step-by-step Podman Desktop guide:** [Podman Desktop lab](docs/learning/PODMAN-DESKTOP-LAB.md).
+
+### Option C — GitHub-hosted runner (no local Docker needed)
 
 1. Fork this public repository to **your GitHub account**.
 2. In your fork, create branch `learner/vision-lab-01` from `main`.
@@ -92,6 +104,7 @@ See [deployment guide](docs/DEPLOYMENT.md), [Kubernetes manifests](deploy/kubern
 
 ## Documentation
 
+- [Podman Desktop / Postman lab](docs/learning/PODMAN-DESKTOP-LAB.md)
 - [Local Docker Desktop / Rancher Desktop / Postman lab](docs/learning/LOCAL-DOCKER-POSTMAN-LAB.md)
 - [GitHub-hosted runner lab](docs/learning/GITHUB-RUNNERS-LAB.md)
 - [TOGAF 10 architecture](docs/architecture/TOGAF10-ARCHITECTURE.md)
