@@ -1,0 +1,5 @@
+flowchart LR
+ Upload[Upload validation] --> Transform[Image preprocessing]
+ Transform --> Backbone[ResNet18 backbone]
+ Backbone --> Head[Classifier head]
+ Head --> Response[Class probabilities]
