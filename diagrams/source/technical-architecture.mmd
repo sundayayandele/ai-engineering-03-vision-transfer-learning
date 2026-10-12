@@ -1,0 +1,6 @@
+flowchart LR
+ Git[GitHub Actions] --> Build[Test and container build]
+ Build --> Cluster[Kubernetes / OpenShift]
+ Registry[Approved model artifacts] --> Cluster
+ Cluster --> API[FastAPI replicas]
+ API --> Metrics[Metrics and logs]
