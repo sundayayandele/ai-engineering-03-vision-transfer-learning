@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vision-model-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 5Gi
+# NOTE: Requires a StorageClass capable of provisioning ReadOnlyMany volumes
+# and a separately managed, pre-populated, trusted model artifact.
