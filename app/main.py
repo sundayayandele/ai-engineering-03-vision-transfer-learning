@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Annotated
 
 import torch
-
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image, UnidentifiedImageError
 from torchvision import transforms
