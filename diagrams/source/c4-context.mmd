@@ -1,0 +1,6 @@
+flowchart LR
+  Learner["Learner / ML engineer"] --> Platform["Vision Transfer Learning Platform"]
+  Steward["Data steward"] --> Platform
+  Platform --> Dataset["Licensed image dataset"]
+  Platform --> Registry["Model artifact store"]
+  Consumer["Client application"] --> Platform
