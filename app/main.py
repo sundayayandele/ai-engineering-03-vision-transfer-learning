@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 
 import torch
+from typing import Annotated
+
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image, UnidentifiedImageError
 from torchvision import transforms
@@ -44,7 +46,7 @@ def ready() -> dict:
 
 
 @app.post("/predict")
-async def predict(file: UploadFile = File(...)) -> dict:
+async def predict(file: Annotated[UploadFile, File()]) -> dict:
     if model is None:
         raise HTTPException(status_code=503, detail="Model artifact not loaded")
     data = await file.read(5 * 1024 * 1024 + 1)
