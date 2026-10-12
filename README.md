@@ -41,7 +41,7 @@ uvicorn app.main:app --reload
 
 ![Architectural Diagrams & Infographics](/diagrams/a_large_infographic_diagram_with_a_clean_modern_fl.png)
 
-![Architectural Diagrams & Infographics](/diagramsa_wide_colorful_infographic_diagram_with_clean_ve.png)
+![Architectural Diagrams & Infographics](/diagrams/a_wide_colorful_infographic_diagram_with_clean_ve.png)
 
 ## Documentation
 
