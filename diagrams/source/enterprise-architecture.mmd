@@ -1,0 +1,6 @@
+flowchart TB
+ Business[Business: learning and image review] --> Data[Data: images, labels, splits]
+ Data --> Application[Application: training and inference]
+ Application --> Technology[Technology: CPU/GPU and Kubernetes]
+ Governance[Governance: security, cost, quality] -.-> Business
+ Governance -.-> Application
